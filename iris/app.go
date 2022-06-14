@@ -7,9 +7,9 @@ import (
 )
 
 type Result struct {
-	message string
-	code    int
-	data    any
+	Message string `json:"message"`
+	Code    int    `json:"code"`
+	Data    any    `json:"data"`
 }
 type LoginVo struct {
 	Username string `json:"username"`
@@ -36,9 +36,9 @@ func Service() {
 		fmt.Println("post value", context.PostValue("username"))
 
 		result := Result{
-			code:    200,
-			message: "test4",
-			data:    context.PostValue("username"),
+			Code:    200,
+			Message: "test4",
+			Data:    context.PostValue("username"),
 		}
 		fmt.Printf(
 			"res--->>>%s\n",
@@ -71,13 +71,23 @@ func Service() {
 		})
 	})
 
+	// iris 路由的基本使用情况
+	/*
+	   注解的基本使用
+	   *
+	*/
+
 	example := app.Party("example", ExampleHandle)
 	example.Get("/test", ExampleRequest)
+	example.Get("/result", ResultCommonRequest)
+	example.Get("/query", Query)
 	home := app.Party("home", HomeHandle)
 	home.Get("/banner", GetBanner)
 	home.Get("", GetHome)
 	user := app.Party("user", UserHandle)
 	user.Get("", GetUser)
+	user.Post("/register", RegisterUser)
+
 	config := iris.WithConfiguration(iris.Configuration{
 		DisableStartupLog: true,
 

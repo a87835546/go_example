@@ -9,7 +9,7 @@ import (
 func main() {
 	demo1.TestFunc()
 	//db.InsertData()
-	db.QueryData()
+	db.QueryData(1)
 	db.Query()
 	db.Insert()
 	db.Update()

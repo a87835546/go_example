@@ -43,23 +43,28 @@ func init() {
 	_db = db
 }
 
-func QueryData() {
-	user := User{}
+func QueryData(id int) (re User) {
+	user := User{Id: id}
 	fmt.Println("starting ......")
-	err := _db.First(&user)
-	fmt.Println("err", err)
-	fmt.Println("select data ", user)
+	//err := _db.First(&user)
+	res := _db.Find(&user)
+	if err := res.Error; err != nil {
+		panic("no have data" + res.Error.Error())
+	} else {
+		fmt.Println("select data ", res)
+		return user
+	}
 }
 
-func InsertData() {
-	//user := User{
-	//	Age:      18,
-	//	UserName: "zhansan",
-	//}
-	//_db.CreateInBatches(user, 100)
-	_db.Model(&User{}).Create(map[string]interface{}{
-		"Age":      18,
-		"Username": "zhansan",
-		"CreateAt": time.Now(),
-	})
+func InsertData(age int, username string) (res User) {
+	user := User{0, age,
+		username, time.Now()}
+	_res := _db.Create(&user)
+	if err := _res.Error; nil != err {
+		panic("no have data" + _res.Error.Error())
+	} else {
+		fmt.Println("insert data res --->>>", user)
+		return user
+	}
+
 }

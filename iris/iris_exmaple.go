@@ -2,6 +2,7 @@ package iris
 
 import (
 	"github.com/kataras/iris/v12"
+	"test/db"
 	"time"
 )
 
@@ -14,4 +15,29 @@ func ExampleRequest(ctx iris.Context) {
 		"time": time.Now(),
 		"path": ctx.Path(),
 	})
+}
+
+func ResultCommonRequest(ctx iris.Context) {
+	ctx.JSON(Result{
+		ctx.Path(),
+		200,
+		time.Now(),
+	})
+}
+
+func Query(ctx iris.Context) {
+	if id, err := ctx.URLParamInt("id"); err == nil {
+		ctx.JSON(Result{
+			ctx.Path(),
+			200,
+			db.QueryData(id),
+		})
+	} else {
+		ctx.JSON(Result{
+			ctx.Path(),
+			500,
+			"parameter is error " + err.Error(),
+		})
+	}
+
 }
