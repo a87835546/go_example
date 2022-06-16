@@ -43,3 +43,21 @@ func RegisterUser(ctx iris.Context) {
 		})
 	}
 }
+
+func QueryAllUsers(ctx iris.Context) {
+	ctx.JSON(Result{
+		"query all users data",
+		200,
+		db.QueryAll(),
+	})
+}
+
+func UpdateUser(ctx iris.Context) {
+	age, _ := ctx.PostValueInt64("age")
+	id, _ := ctx.PostValueInt64("id")
+	ctx.JSON(Result{
+		"query all users data",
+		200,
+		db.UpdateUserById(age, id),
+	})
+}

@@ -87,6 +87,8 @@ func Service() {
 	user := app.Party("user", UserHandle)
 	user.Get("", GetUser)
 	user.Post("/register", RegisterUser)
+	user.Post("/queryAll", QueryAllUsers)
+	user.Get("/updateById", UpdateUser)
 
 	config := iris.WithConfiguration(iris.Configuration{
 		DisableStartupLog: true,

@@ -16,10 +16,10 @@ const (
 )
 
 type User struct {
-	Id       int
-	Age      int
-	UserName string    `db:"user_name"`
-	CreateAt time.Time `db:"create_at"`
+	Id       int    `json:"id" db:"id"'`
+	Age      int    `json:"age" db:"age"`
+	UserName string `json:"user_name" db:"user_name"`
+	CreateAt int64  `json:"create_at" db:"create_at"`
 }
 
 //var user User
@@ -56,9 +56,33 @@ func QueryData(id int) (re User) {
 	}
 }
 
+func QueryAll() (users []User) {
+	fmt.Println("starting ......")
+	//err := _db.First(&user)
+	res := _db.Find(&users)
+	if err := res.Error; err != nil {
+		panic("no have data" + res.Error.Error())
+	} else {
+		fmt.Println("select data ", users)
+		return users
+	}
+}
+
+func UpdateUserById(age int64, id int64) (user User) {
+	fmt.Println("starting ......")
+	//err := _db.First(&user)
+	res := _db.Update("age", age).Where("id", id)
+	if err := res.Error; err != nil {
+		panic("no have data" + res.Error.Error())
+	} else {
+		fmt.Println("select data ", user)
+		return user
+	}
+}
+
 func InsertData(age int, username string) (res User) {
 	user := User{0, age,
-		username, time.Now()}
+		username, time.Now().Unix()}
 	_res := _db.Create(&user)
 	if err := _res.Error; nil != err {
 		panic("no have data" + _res.Error.Error())
