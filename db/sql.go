@@ -90,5 +90,4 @@ func InsertData(age int, username string) (res User) {
 		fmt.Println("insert data res --->>>", user)
 		return user
 	}
-
 }

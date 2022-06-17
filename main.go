@@ -16,7 +16,7 @@ func main() {
 	db.Insert()
 	db.Update()
 	db.Delete()
-
+	demo1.ReadFile()
 	fmt.Print(db.Print("11"))
 	iris.Service()
 }
