@@ -11,12 +11,12 @@ type Config struct {
 }
 
 type Service struct {
-	Name string `yaml:"Name"`
-	Port string `yaml:"Port"`
+	Name string `yaml:"name"`
+	Port string `yaml:"port"`
 }
 
 func ReadFile() {
-	var config = &Config{}
+	var config = Config{}
 	fmt.Printf("conf --->>>%s\n", config)
 	c, err := ioutil.ReadFile("demo1/go.yaml")
 	if err != nil {
@@ -24,7 +24,7 @@ func ReadFile() {
 	} else {
 		fmt.Println("read file success ,res ", c)
 	}
-	err = yaml.Unmarshal(c, config)
+	err = yaml.Unmarshal(c, &config)
 	if err != nil {
 		fmt.Println("read file failed ,error ", err.Error())
 	}
