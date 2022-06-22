@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/kataras/iris/v12"
+	"io"
+	"os"
 )
 
 type Result struct {
@@ -56,7 +58,36 @@ func Service() {
 			})
 		}
 	})
-
+	app.Post("/upload", func(context iris.Context) {
+		file, fileHeader, err := context.FormFile("file")
+		if nil != err {
+			context.JSON(Result{
+				"upload file failed" + err.Error(),
+				201,
+				"11",
+			})
+			return
+		} else {
+			defer file.Close()
+			dest := "file path" + fileHeader.Filename
+			dest1, _ := os.Create(dest)
+			_, err = io.Copy(dest1, file)
+			if nil != err {
+				context.JSON(Result{
+					"upload file failed" + err.Error(),
+					201,
+					"11",
+				})
+				return
+			}
+			context.JSON(Result{
+				"upload file success",
+				200,
+				"11",
+			})
+			defer dest1.Close()
+		}
+	})
 	app.Post("/postJson", func(ctx iris.Context) {
 		login := LoginVo{}
 		if err := ctx.ReadJSON(&login); err != nil {
