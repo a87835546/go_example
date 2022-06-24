@@ -15,11 +15,17 @@ const (
 	dbName     string = "TEST"
 )
 
+type Desc struct {
+	TitleCn string `json:"title_CN" db:"title_cn"`
+	TitleEn string `json:"title_EN" db:"title_en"`
+	TitleKr string `json:"title_KR" db:"title_kr"`
+}
 type User struct {
 	Id       int    `json:"id" db:"id"'`
 	Age      int    `json:"age" db:"age"`
 	UserName string `json:"user_name" db:"user_name"`
 	CreateAt int64  `json:"create_at" db:"create_at"`
+	Desc     string `json:"desc" db:"title"`
 }
 
 //var user User
@@ -80,9 +86,21 @@ func UpdateUserById(age int64, id int64) (user User) {
 	}
 }
 
+func UpdateUserTitleById(title any, id uint) (user User) {
+	fmt.Println("starting ...... ", title)
+	//err := _db.First(&user)
+	res := _db.Update("title", title).Where("id", id)
+	if err := res.Error; err != nil {
+		panic("no have data" + res.Error.Error())
+	} else {
+		fmt.Println("update data ", user)
+		return user
+	}
+}
+
 func InsertData(age int, username string) (res User) {
 	user := User{0, age,
-		username, time.Now().Unix()}
+		username, time.Now().Unix(), ""}
 	_res := _db.Create(&user)
 	if err := _res.Error; nil != err {
 		panic("no have data" + _res.Error.Error())

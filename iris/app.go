@@ -120,6 +120,10 @@ func Service() {
 	user.Post("/register", RegisterUser)
 	user.Post("/queryAll", QueryAllUsers)
 	user.Get("/updateById", UpdateUser)
+	user.Get("/queryById", QueryUsersById)
+	user.Post("/updateTitleById", UpdateUserTitleByGoqu)
+	user.Get("/getTitleById", FetchUserTitle)
+	user.Get("/updateCNTitle", UpdateCNUserTitle)
 
 	config := iris.WithConfiguration(iris.Configuration{
 		DisableStartupLog: true,

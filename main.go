@@ -11,7 +11,7 @@ func main() {
 	demo1.InterfaceDemo()
 	demo1.TestFunc()
 	demo1.Test()
-	db.QueryData(1)
+	//db.QueryData(1)
 	db.Query()
 	db.Insert()
 	db.Update()
