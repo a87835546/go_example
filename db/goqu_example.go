@@ -80,6 +80,21 @@ func QueryById(id int) []User {
 	return users
 }
 
+func QueryAllUsers() []User {
+	var users []User
+	sql, _, _ := g.From("users").Select().ToSQL()
+	res, err := Db.Queryx(sql)
+	if nil != err {
+		fmt.Printf("err --->>>> %s", err.Error())
+	}
+	for res.Next() {
+		var p User
+		err = res.StructScan(&p)
+		users = append(users, p)
+	}
+	return users
+}
+
 func Insert() {
 	//sql, _, _ := goqu.Insert("users").Rows(goqu.Record{"user_name": "lisi", "age": 12, "create_at": time.Now()}).ToSQL()
 	d := goqu.Record{

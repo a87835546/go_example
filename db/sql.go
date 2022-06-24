@@ -16,16 +16,16 @@ const (
 )
 
 type Desc struct {
-	TitleCn string `json:"title_CN" db:"title_cn"`
-	TitleEn string `json:"title_EN" db:"title_en"`
-	TitleKr string `json:"title_KR" db:"title_kr"`
+	CN string `json:"cn" db:"cn"`
+	EN string `json:"en" db:"en"`
+	KR string `json:"kr" db:"kr"`
 }
 type User struct {
-	Id       int    `json:"id" db:"id"'`
-	Age      int    `json:"age" db:"age"`
-	UserName string `json:"user_name" db:"user_name"`
-	CreateAt int64  `json:"create_at" db:"create_at"`
-	Desc     string `json:"desc" db:"title"`
+	Id       int     `json:"id" db:"id"'`
+	Age      int     `json:"age" db:"age"`
+	UserName string  `json:"user_name" db:"user_name"`
+	CreateAt int64   `json:"create_at" db:"create_at"`
+	Desc     *string `json:"desc" db:"title"`
 }
 
 //var user User
@@ -100,7 +100,7 @@ func UpdateUserTitleById(title any, id uint) (user User) {
 
 func InsertData(age int, username string) (res User) {
 	user := User{0, age,
-		username, time.Now().Unix(), ""}
+		username, time.Now().Unix(), nil}
 	_res := _db.Create(&user)
 	if err := _res.Error; nil != err {
 		panic("no have data" + _res.Error.Error())

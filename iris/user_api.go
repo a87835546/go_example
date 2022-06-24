@@ -58,7 +58,7 @@ func QueryAllUsers(ctx iris.Context) {
 	ctx.JSON(Result{
 		"query all users data",
 		200,
-		db.QueryAll(),
+		db.QueryAllUsers(),
 	})
 }
 func QueryUsersById(ctx iris.Context) {
