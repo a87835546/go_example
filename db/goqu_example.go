@@ -18,7 +18,7 @@ var g = goqu.Dialect("mysql")
 
 func init() {
 
-	_dsn := "admin:Sugarotect2022**@tcp(test.cjyntu0au13f.ap-southeast-1.rds.amazonaws.com:3306)/TEST?charset=utf8mb4&parseTime=True"
+	_dsn := "root:123456@tcp(192.168.0.229:3306)/vip_site?charset=utf8mb4&parseTime=True"
 	td, err := sqlx.Connect("mysql", _dsn)
 	if nil != err {
 		fmt.Printf("connect DB failed,err:%v\n", err)
@@ -53,7 +53,6 @@ func Query() {
 	//sql, _, _ := ds.Limit(1).ToSQL()
 
 	fmt.Println(sql)
-	err = Db.Select(&users, sql)
 	//res, err := Db.Exec(sql)
 	//err = db.Select(&s, "SELECT * FROM  users where user_name = 'zhansan' ")
 	fmt.Println("res", users)
@@ -62,6 +61,14 @@ func Query() {
 	} else {
 		fmt.Printf("query res -->>%v\n", users)
 	}
+	defer func() {
+		if r := recover(); r != nil {
+
+		} else {
+			err = Db.Select(&users, sql)
+
+		}
+	}()
 }
 
 func QueryById(id int) []User {

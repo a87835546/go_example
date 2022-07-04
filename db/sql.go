@@ -8,11 +8,11 @@ import (
 )
 
 const (
-	dbUser     string = "admin"
-	dbPassword string = "Sugarotect2022**"
-	dbHost     string = "test.cjyntu0au13f.ap-southeast-1.rds.amazonaws.com"
+	dbUser     string = "root"
+	dbPassword string = "123456"
+	dbHost     string = "192.168.0.229"
 	dbPort     int    = 3306
-	dbName     string = "TEST"
+	dbName     string = "vip_site"
 )
 
 type Desc struct {

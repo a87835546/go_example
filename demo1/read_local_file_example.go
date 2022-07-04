@@ -11,8 +11,9 @@ type Config struct {
 }
 
 type Service struct {
-	Name string `yaml:"name"`
+	Name string `yaml:"name"` // bbbbb
 	Port string `yaml:"port"`
+	AA   string //aaa
 }
 
 func ReadFile() {

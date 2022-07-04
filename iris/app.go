@@ -3,9 +3,12 @@ package iris
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/iris-contrib/swagger/v12"
+	"github.com/iris-contrib/swagger/v12/swaggerFiles"
 	"github.com/kataras/iris/v12"
 	"io"
 	"os"
+	_ "test/docs"
 )
 
 type Result struct {
@@ -20,6 +23,14 @@ type LoginVo struct {
 
 func Service() {
 	app := iris.New()
+
+	config1 := &swagger.Config{
+		URL: "http://localhost:8080/swagger/doc.json", //The url pointing to API definition
+	}
+
+	// use swagger middleware to
+	app.Get("/swagger/{any:path}", swagger.CustomWrapHandler(config1, swaggerFiles.Handler))
+
 	app.Use(myMiddleware)
 	app.Handle("GET", "/test", func(context iris.Context) {
 		context.JSON(iris.Map{"message": "test"})
@@ -54,7 +65,7 @@ func Service() {
 			context.JSON(iris.Map{
 				"code":    200,
 				"message": "test4",
-				"data":    context.PostValue("username"),
+				"data":    context.PostValue("username") + context.RemoteAddr(),
 			})
 		}
 	})

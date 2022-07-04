@@ -1,6 +1,9 @@
 package demo1
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 /**
 interface 常见的使用介绍
@@ -39,6 +42,15 @@ func (u *user) string() string {
 	return "interface 嵌入 其他的 interface --- user struct"
 }
 
+type tester interface {
+	toString()
+}
+type integer int
+
+func (i integer) toString() {
+	fmt.Printf("test inferface --- int to string --->>> %v\n", i)
+}
+
 type admin struct {
 	name string
 	role int
@@ -73,6 +85,11 @@ func InterfaceDemo() {
 		10,
 	}
 	sendNotification(&a1)
+	var a integer = 10
+	a.toString()
+
+	var err error = errors.New("123")
+	fmt.Printf("自定义err 信息 --->>>%v\n", err.Error())
 }
 
 func sendNotification(n notifier) {

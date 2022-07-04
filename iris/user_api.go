@@ -30,17 +30,29 @@ func GetUser(ctx iris.Context) {
 		"message": "iris 路由的基本使用",
 		"path":    ctx.Path(),
 		"time":    time.Now(),
-		"data":    []string{},
+		"data":    db.QueryAll(),
 	})
 }
 
+// RegisterUser ShowAccount godoc
+// @Summary      Show an account
+// @Description  get string by ID
+// @Tags         accounts
+// @Accept       json
+// @Produce      json
+// @Param        id   path      int  true  "Account ID"
+// @Success      200  {object}  RegisterVo
+// @Failure      400  {object}  RegisterVo
+// @Failure      404  {object}	RegisterVo
+// @Failure      500  {object}	demo1.Service
+// @Router       /accounts/{id} [get]
 func RegisterUser(ctx iris.Context) {
 	register := RegisterVo{}
 	if err := ctx.ReadJSON(&register); nil != err {
 		ctx.JSON(Result{
 			"parameter error-->>" + err.Error(),
 			500,
-			nil,
+			ctx.RemoteAddr(),
 		})
 	} else {
 		fmt.Printf("register post data ---->>>>%s\n", register)
