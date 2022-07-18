@@ -35,20 +35,20 @@ func (r Result) ToBytes() []byte {
 
 type ConcurrentMap map[string]any
 
-func (cmap ConcurrentMap) GetValue(key string) any {
+func (c ConcurrentMap) GetValue(key string) any {
 	lo.Lock()
 	defer lo.Unlock()
-	return cmap[key]
+	return c[key]
 }
 
-func (cmap ConcurrentMap) SetValue(key string, obj any) {
+func (c ConcurrentMap) SetValue(key string, obj any) {
 	lo.Lock()
 	defer lo.Unlock()
-	cmap[key] = obj
+	c[key] = obj
 }
 
-func (cmap ConcurrentMap) DeleteValue(key string) {
+func (c ConcurrentMap) DeleteValue(key string) {
 	lo.Lock()
 	defer lo.Unlock()
-	delete(cmap, key)
+	delete(c, key)
 }
