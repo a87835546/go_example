@@ -15,11 +15,6 @@ const (
 	dbName     string = "vip_site"
 )
 
-type Desc struct {
-	CN string `json:"cn" db:"cn"`
-	EN string `json:"en" db:"en"`
-	KR string `json:"kr" db:"kr"`
-}
 type User struct {
 	Id       int     `json:"id" db:"id"'`
 	Age      int     `json:"age" db:"age"`

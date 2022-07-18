@@ -5,6 +5,7 @@ import (
 	"test/db"
 	"test/demo1"
 	"test/iris"
+	"time"
 )
 
 // @title           Swagger Example API
@@ -22,6 +23,7 @@ import (
 // @host      localhost:8080
 // @BasePath  /v2
 func main() {
+	fmt.Printf("time -->>>> %v \n\n", time.Now().UnixMicro())
 	demo1.InterfaceDemo()
 	demo1.TestFunc()
 	demo1.Test()
@@ -33,6 +35,7 @@ func main() {
 	db.Delete()
 	demo1.ReadFile()
 	demo1.GoroutineTest()
+	demo1.HSetValue("object", "1")
 	fmt.Print(db.Print("11"))
 	iris.Service()
 	defer func() {

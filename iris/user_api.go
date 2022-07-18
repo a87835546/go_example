@@ -5,15 +5,15 @@ import (
 	"fmt"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/kataras/iris/v12"
+	"test/consts"
 	"test/db"
 	"time"
 )
 
 type RegisterVo struct {
-	Name     string  `json:"username"`
-	Password string  `json:"password"`
-	Type     int     `json:"type"`
-	Desc     db.Desc `json:"desc"`
+	Name     string `json:"username"`
+	Password string `json:"password"`
+	Type     int    `json:"type"`
 }
 
 type UpdateVo struct {
@@ -40,16 +40,16 @@ func GetUser(ctx iris.Context) {
 // @Tags         accounts
 // @Accept       json
 // @Produce      json
-// @Param        id   path      int  true  "Account ID"
-// @Success      200  {object}  RegisterVo
-// @Failure      400  {object}  RegisterVo
-// @Failure      404  {object}	RegisterVo
-// @Failure      500  {object}	demo1.Service
-// @Router       /accounts/{id} [get]
+// @Param        id   RegisterVo  true  "Account ID"
+// @Success      200  {object}  Result
+// @Failure      400  {object}  Result
+// @Failure      404  {object}	Result
+// @Failure      500  {object}	Result
+// @Router       /user/register [post]
 func RegisterUser(ctx iris.Context) {
 	register := RegisterVo{}
 	if err := ctx.ReadJSON(&register); nil != err {
-		ctx.JSON(Result{
+		ctx.JSON(consts.Result{
 			"parameter error-->>" + err.Error(),
 			500,
 			ctx.RemoteAddr(),
@@ -67,7 +67,7 @@ func RegisterUser(ctx iris.Context) {
 }
 
 func QueryAllUsers(ctx iris.Context) {
-	ctx.JSON(Result{
+	ctx.JSON(consts.Result{
 		"query all users data",
 		200,
 		db.QueryAllUsers(),
@@ -75,7 +75,7 @@ func QueryAllUsers(ctx iris.Context) {
 }
 func QueryUsersById(ctx iris.Context) {
 	id, _ := ctx.URLParamInt("id")
-	ctx.JSON(Result{
+	ctx.JSON(consts.Result{
 		"query all users data",
 		200,
 		db.QueryById(id),
@@ -85,7 +85,7 @@ func QueryUsersById(ctx iris.Context) {
 func UpdateUser(ctx iris.Context) {
 	age, _ := ctx.PostValueInt64("age")
 	id, _ := ctx.PostValueInt64("id")
-	ctx.JSON(Result{
+	ctx.JSON(consts.Result{
 		"query all users data",
 		200,
 		db.UpdateUserById(age, id),
@@ -99,14 +99,14 @@ func UpdateUserTitle(ctx iris.Context) {
 		fmt.Println("desc ---- >>>> %a  title--->>>>", desc, vo.Title)
 		if err = json.Unmarshal([]byte(vo.Title), &desc); err == nil {
 
-			ctx.JSON(Result{
+			ctx.JSON(consts.Result{
 				"update user data",
 				200,
 				db.UpdateUserTitleById(desc, vo.Id),
 			})
 		}
 	}
-	ctx.JSON(Result{
+	ctx.JSON(consts.Result{
 		"parameter error--->>>" + err.Error(),
 		500,
 		nil,
@@ -120,14 +120,14 @@ func UpdateUserTitleByGoqu(ctx iris.Context) {
 	if err = ctx.ReadJSON(&vo); err == nil {
 		if res, err1 := jsoniter.MarshalToString(vo.Title); err1 == nil {
 			db.UpdateUserTitle(res, int(vo.Id))
-			ctx.JSON(Result{
+			ctx.JSON(consts.Result{
 				"update user data",
 				200,
 				time.Now(),
 			})
 			return
 		} else {
-			ctx.JSON(Result{
+			ctx.JSON(consts.Result{
 				"parameter error--->>>" + err1.Error(),
 				501,
 				nil,
@@ -137,7 +137,7 @@ func UpdateUserTitleByGoqu(ctx iris.Context) {
 
 	}
 
-	ctx.JSON(Result{
+	ctx.JSON(consts.Result{
 		"parameter error--->>>" + err.Error(),
 		500,
 		nil,
@@ -148,7 +148,7 @@ func UpdateUserTitleByGoqu(ctx iris.Context) {
 func FetchUserTitle(ctx iris.Context) {
 	id, _ := ctx.URLParamInt("id")
 
-	ctx.JSON(Result{
+	ctx.JSON(consts.Result{
 		"select user title by id",
 		200,
 		db.FetchTitleById(id),
@@ -160,7 +160,7 @@ func UpdateCNUserTitle(ctx iris.Context) {
 	title := ctx.URLParam("cn")
 	index, _ := ctx.URLParamInt("type")
 
-	ctx.JSON(Result{
+	ctx.JSON(consts.Result{
 		"select user title by id",
 		200,
 		db.UpdateTitleById(id, title, index),

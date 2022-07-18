@@ -14,22 +14,26 @@ import (
 )
 
 var Db *sqlx.DB
-var g = goqu.Dialect("mysql")
+var Db1 *sqlx.DB
+var G = goqu.Dialect("mysql")
 
 func init() {
 
 	_dsn := "root:123456@tcp(192.168.0.229:3306)/vip_site?charset=utf8mb4&parseTime=True"
+	_dsn1 := "root:123456@tcp(192.168.0.229:3306)/tel_betting?charset=utf8mb4&parseTime=True"
 	td, err := sqlx.Connect("mysql", _dsn)
-	if nil != err {
+	td1, err1 := sqlx.Connect("mysql", _dsn1)
+	if nil != err && err1 != nil {
 		fmt.Printf("connect DB failed,err:%v\n", err)
 		return
 	}
 	Db = td
-
+	Db1 = td1
 	fmt.Println("db", Db)
 	Db.SetMaxOpenConns(20)
 	Db.SetMaxIdleConns(10)
-
+	Db1.SetMaxOpenConns(20)
+	Db1.SetMaxIdleConns(10)
 	//s := goqu.S("TEST")
 	//t := s.Table("users")
 	//sql, _, _ := goqu.From(t).Select(t.Col("user_name")).ToSQL()
@@ -47,7 +51,7 @@ func Query() {
 	ex := goqu.Ex{
 		"user_name": "zhansan",
 	}
-	sql, agrs, err := g.From("users").Where(ex).ToSQL()
+	sql, agrs, err := G.From("users").Where(ex).ToSQL()
 	fmt.Println("A ", agrs)
 	//sql, _, _ := goqu.From("users").ToSQL()
 	//sql, _, _ := ds.Limit(1).ToSQL()
@@ -76,7 +80,7 @@ func QueryById(id int) []User {
 	ex := goqu.Ex{
 		"id": id,
 	}
-	sql, _, err := g.From("users").Where(ex).ToSQL()
+	sql, _, err := G.From("users").Where(ex).ToSQL()
 	err = Db.Select(&users, sql)
 	fmt.Println("res", users)
 	if nil != err {
@@ -89,7 +93,7 @@ func QueryById(id int) []User {
 
 func QueryAllUsers() []User {
 	var users []User
-	sql, _, _ := g.From("users").Select().ToSQL()
+	sql, _, _ := G.From("users").Select().ToSQL()
 	res, err := Db.Queryx(sql)
 	if nil != err {
 		fmt.Printf("err --->>>> %s", err.Error())
@@ -109,7 +113,7 @@ func Insert() {
 		"age":       12,
 		"create_at": time.Now().Unix(),
 	}
-	sql, _, _ := g.From("users").Insert().Rows(d).ToSQL()
+	sql, _, _ := G.From("users").Insert().Rows(d).ToSQL()
 
 	fmt.Print("insert sql --->>>", sql)
 	res, err := Db.Exec(sql)
@@ -121,7 +125,7 @@ func Insert() {
 }
 
 func Update() {
-	sql, _, _ := g.From("users").Update().Set(goqu.Record{"user_name": "lisi"}).Where(goqu.C("id").Eq(1)).ToSQL()
+	sql, _, _ := G.From("users").Update().Set(goqu.Record{"user_name": "lisi"}).Where(goqu.C("id").Eq(1)).ToSQL()
 	fmt.Print("update sql --->>>", sql)
 	res, err := Db.Exec(sql)
 	if nil != err {
@@ -199,7 +203,7 @@ func UpdateTitleById(id int, cn string, i int) bool {
 }
 
 func Delete() {
-	sql, _, _ := g.From("users").Delete().Where(goqu.C("id").Eq(3)).ToSQL()
+	sql, _, _ := G.From("users").Delete().Where(goqu.C("id").Eq(3)).ToSQL()
 	fmt.Print("delete sql --->>>", sql)
 	res, err := Db.Exec(sql)
 	if nil != err {

@@ -1,0 +1,17 @@
+syntax = "proto3";
+package app2;
+option go_package = "./app2";
+
+service Member {
+  rpc addMember(MemberModel) returns (MemberModel);
+}
+message MemberModel {
+  string username = "zhansan";
+  int32  age = 18;
+  string desc = "hahah";
+}
+message Product {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+}
