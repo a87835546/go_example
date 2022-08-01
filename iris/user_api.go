@@ -25,6 +25,13 @@ func UserHandle(ctx iris.Context) {
 	ctx.Next()
 }
 
+// GetUser ShowAccount godoc
+// @Summary      Show a user
+// @Description  get string by ID
+// @Tags         user
+// @Accept       json
+// @Produce      json
+// @Router       /user [get]
 func GetUser(ctx iris.Context) {
 	ctx.JSON(iris.Map{
 		"message": "iris 路由的基本使用",
@@ -35,16 +42,11 @@ func GetUser(ctx iris.Context) {
 }
 
 // RegisterUser ShowAccount godoc
-// @Summary      Show an account
+// @Summary      Register a user
 // @Description  get string by ID
-// @Tags         accounts
+// @Tags         user
 // @Accept       json
 // @Produce      json
-// @Param        id   RegisterVo  true  "Account ID"
-// @Success      200  {object}  Result
-// @Failure      400  {object}  Result
-// @Failure      404  {object}	Result
-// @Failure      500  {object}	Result
 // @Router       /user/register [post]
 func RegisterUser(ctx iris.Context) {
 	register := RegisterVo{}

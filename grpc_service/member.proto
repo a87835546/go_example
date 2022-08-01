@@ -1,14 +1,15 @@
 syntax = "proto3";
-package app2;
-option go_package = "./app2";
+package grpc_service;
+option go_package = "./member";
 
 service Member {
-  rpc addMember(MemberModel) returns (MemberModel);
+  rpc add(MemberModel) returns (MemberModel);
+  rpc delete(MemberModel) returns (MemberModel);
 }
 message MemberModel {
-  string username = "zhansan";
+  string username = 2;
   int32  age = 18;
-  string desc = "hahah";
+  string desc = 1;
 }
 message Product {
   string id = 1;

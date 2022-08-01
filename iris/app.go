@@ -21,8 +21,7 @@ type LoginVo struct {
 	Password string `json:"password"`
 }
 
-func Service() {
-	app := iris.New()
+func Service(app *iris.Application) {
 
 	config1 := &swagger.Config{
 		URL: "http://localhost:8080/swagger/doc.json", //The url pointing to API definition
