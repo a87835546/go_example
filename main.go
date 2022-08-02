@@ -10,6 +10,8 @@ import (
 	_ "test/docs"
 	app "test/iris"
 	"time"
+
+	_ "test/hprose_example"
 )
 
 // @title           Swagger Example API
