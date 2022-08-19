@@ -2,7 +2,6 @@ package db
 
 import (
 	"fmt"
-	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"time"
 )
@@ -23,25 +22,25 @@ type User struct {
 	Desc     *string `json:"desc" db:"title"`
 }
 
-//var user User
+// var user User
 var dsn string = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&loc=Local&parseTime=true", dbUser, dbPassword, dbHost, dbPort, dbName)
 var _db *gorm.DB
 
 func init() {
-
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if nil == err {
-		fmt.Println("data base connect success")
-	} else {
-		fmt.Println("data base connect fail", err)
-	}
-	//db.Debug().Select("SELECT * FROM user")
-	sqlDB, err := db.DB()
-	sqlDB.SetMaxIdleConns(10)
-	sqlDB.SetMaxOpenConns(100)
-	sqlDB.SetConnMaxIdleTime(time.Hour)
-
-	_db = db
+	//
+	//db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	//if nil == err {
+	//	fmt.Println("data base connect success")
+	//} else {
+	//	fmt.Println("data base connect fail", err)
+	//}
+	////db.Debug().Select("SELECT * FROM user")
+	//sqlDB, err := db.DB()
+	//sqlDB.SetMaxIdleConns(10)
+	//sqlDB.SetMaxOpenConns(100)
+	//sqlDB.SetConnMaxIdleTime(time.Hour)
+	//
+	//_db = db
 }
 
 func QueryData(id int) (re User) {

@@ -7,7 +7,7 @@ import (
 	"net/rpc"
 	"test/db"
 	"test/demo1"
-	_ "test/docs"
+	//_ "test/docs"
 	app "test/iris"
 	"time"
 
