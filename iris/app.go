@@ -12,6 +12,7 @@ import (
 	"os"
 	"test/consts"
 	"test/demo2"
+	"test/iris/middleware"
 	"test/websocket_demo"
 	"time"
 )
@@ -31,6 +32,7 @@ func Service(app *iris.Application) {
 	app.Get("/swagger/{any:path}", swagger.CustomWrapHandler(config1, swaggerFiles.Handler))
 
 	app.Use(myMiddleware)
+	app.Use(middleware.LogInfoBefore, middleware.LogInfoBefore, middleware.CROS)
 	app.Handle("GET", "/test", func(context iris.Context) {
 		context.JSON(iris.Map{"message": "test"})
 	})
