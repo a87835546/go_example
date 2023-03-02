@@ -3,12 +3,11 @@ package main
 import (
 	"fmt"
 	"github.com/kataras/iris/v12"
-	"net"
 	"net/rpc"
 	"test/db"
 	"test/demo1"
-	//_ "test/docs"
 	app "test/iris"
+
 	"time"
 
 	_ "test/hprose_example"
@@ -71,30 +70,29 @@ func main() {
 		return
 	}
 
-	lis, err := net.Listen("tcp", "localhost:9999") //开始监听
-
-	if err != nil {
-		fmt.Println("fail in listen")
-	}
-	defer lis.Close()
-
+	//lis, err := net.Listen("tcp", "localhost:9999") //开始监听
+	//
+	//if err != nil {
+	//	fmt.Println("fail in listen")
+	//}
+	//defer lis.Close()
 	//service := hprpc.NewFastHTTPService()
 	//service.AddFunction("hello", hello)
 	//_app.Any("/test2", func(ctx *iris.Context) {
 	//	service.ServeFastHTTP(ctx.RequestCtx)
 	//})
-	func() {
-		go app.Service(_app)
-
-		for {
-			conn, err := lis.Accept() //建立连接
-			if err != nil {
-				fmt.Printf("fail in accept")
-			}
-			defer conn.Close()
-			rpc.ServeConn(conn) //将连接绑定到rpc服务
-		}
-	}()
+	//func() {
+	//	go app.Service(_app)
+	//
+	//	for {
+	//		conn, err := lis.Accept() //建立连接
+	//		if err != nil {
+	//			fmt.Printf("fail in accept")
+	//		}
+	//		defer conn.Close()
+	//		rpc.ServeConn(conn) //将连接绑定到rpc服务
+	//	}
+	//}()
 
 	fmt.Printf("time -->>>> %v \n\n", time.Now().UnixMicro())
 	demo1.InterfaceDemo()
@@ -115,4 +113,6 @@ func main() {
 			fmt.Printf("recover ---->>>> %v \n", r)
 		}
 	}()
+	app.Service(_app)
+
 }

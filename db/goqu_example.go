@@ -19,21 +19,16 @@ var G = goqu.Dialect("mysql")
 
 func init() {
 
-	_dsn := "root:123456@tcp(192.168.0.229:3306)/vip_site?charset=utf8mb4&parseTime=True"
-	_dsn1 := "root:123456@tcp(192.168.0.229:3306)/tel_betting?charset=utf8mb4&parseTime=True"
+	_dsn := "admin:qwer1234@tcp(test.cjyntu0au13f.ap-southeast-1.rds.amazonaws.com:3306)/demo?charset=utf8mb4&parseTime=True"
 	td, err := sqlx.Connect("mysql", _dsn)
-	td1, err1 := sqlx.Connect("mysql", _dsn1)
-	if nil != err && err1 != nil {
+	if nil != err {
 		fmt.Printf("connect DB failed,err:%v\n", err)
 		return
 	}
 	Db = td
-	Db1 = td1
 	fmt.Println("db", Db)
 	Db.SetMaxOpenConns(20)
 	Db.SetMaxIdleConns(10)
-	Db1.SetMaxOpenConns(20)
-	Db1.SetMaxIdleConns(10)
 	//s := goqu.S("TEST")
 	//t := s.Table("users")
 	//sql, _, _ := goqu.From(t).Select(t.Col("user_name")).ToSQL()
