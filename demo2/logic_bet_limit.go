@@ -13,7 +13,7 @@ func BetLimitUpdate() {
 }
 
 func QueryAllList() (v []BettingLimit, err error) {
-	res, err := db.Db1.Queryx("SELECT * FROM tbl_bet_limit")
+	res, err := db.Db.Queryx("SELECT * FROM tbl_bet_limit")
 	for res.Next() {
 		var p BettingLimit
 		err = res.StructScan(&p)
@@ -32,7 +32,7 @@ func BetLimitInsert(record goqu.Record) (err error) {
 		fmt.Errorf("config sql err -->>> %v", err.Error())
 	}
 	fmt.Printf("sql -- >>> %v \n", query)
-	_, err = db.Db1.Exec(query)
+	_, err = db.Db.Exec(query)
 	if err != nil {
 		fmt.Errorf("insert sql err -->>> %v", err.Error())
 	}

@@ -12,7 +12,7 @@ func Test() {
 	s["c"] = "null"
 	s["d"] = ""
 	fmt.Printf("map %s\n", s)
-	fmt.Printf("map s1 %s   is nil %s \n", s1, nil == s1)
+	fmt.Printf("map s1 %s   is nil %v \n", s1, nil == s1)
 
 	for item, index := range s {
 		fmt.Printf("map 遍历 --->>%s %s\n", item, index)

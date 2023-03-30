@@ -14,7 +14,7 @@ func InsertMember(record m) (err error) {
 	sql, _, err := db.G.Insert("tbl_member").Rows(record).ToSQL()
 	fmt.Printf("sql --->>>> %v \n\n", sql)
 	if err == nil {
-		_, err = db.Db1.Exec(sql)
+		_, err = db.Db.Exec(sql)
 		if err != nil {
 			fmt.Errorf("err -->>> %v \n", err.Error())
 		}
@@ -30,7 +30,7 @@ func UpdateMember(record m) (err error) {
 	sql, _, err := db.G.Update("tbl_member").Set(record).Where(ex).ToSQL()
 	fmt.Printf("sql --->>>> %v \n\n", sql)
 	if err == nil {
-		_, err = db.Db1.Exec(sql)
+		_, err = db.Db.Exec(sql)
 		if err != nil {
 			fmt.Errorf("err -->>> %v \n", err.Error())
 		}
@@ -40,7 +40,7 @@ func UpdateMember(record m) (err error) {
 	return err
 }
 func QueryMembers() (members []Member, err error) {
-	res, err := db.Db1.Queryx("SELECT * FROM tbl_member")
+	res, err := db.Db.Queryx("SELECT * FROM tbl_member")
 	if err != nil {
 		fmt.Errorf("err --->>> %v \n", err.Error())
 	}

@@ -13,15 +13,15 @@ func AnnounceInsert(mode AnnouncementMode) {
 	if err != nil {
 		fmt.Errorf("sql err -->>> %v \n", err.Error())
 	}
-	_, err = db.Db1.Exec(sql)
+	_, err = db.Db.Exec(sql)
 	fmt.Printf("sql --->>> >%v\n", sql)
 	if err != nil {
 		fmt.Errorf("exec sql err -->>> %v \n", err.Error())
 	}
 }
 func AnnounceList() (list []AnnouncementMode, err error) {
-	rows, err := db.Db1.Queryx("SELECT * FROM tbl_announcement")
-	//err = db.Db1.Select(&list, "SELECT * FROM tbl_announcement")
+	rows, err := db.Db.Queryx("SELECT * FROM tbl_announcement")
+	//err = db.Db.Select(&list, "SELECT * FROM tbl_announcement")
 	if err != nil {
 		fmt.Errorf("exec sql err -->>> %v \n", err.Error())
 		return list, err

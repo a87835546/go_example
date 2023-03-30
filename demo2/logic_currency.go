@@ -16,12 +16,12 @@ func InsertCurrency(record goqu.Record) error {
 		return err
 	} else {
 		fmt.Printf("sql ---->>> %v\n", sql)
-		_, err = db.Db1.Exec(sql)
+		_, err = db.Db.Exec(sql)
 		return err
 	}
 }
 func QueryCurrencyList() (v []Currency, err error) {
-	res, err := db.Db1.Queryx("SELECT * FROM tbl_currency")
+	res, err := db.Db.Queryx("SELECT * FROM tbl_currency")
 	for res.Next() {
 		var p Currency
 		err = res.StructScan(&p)

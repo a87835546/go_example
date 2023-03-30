@@ -9,8 +9,6 @@ import (
 	app "test/iris"
 
 	"time"
-
-	_ "test/hprose_example"
 )
 
 // @title           Swagger Example API
@@ -94,16 +92,19 @@ func main() {
 	//	}
 	//}()
 
-	fmt.Printf("time -->>>> %v \n\n", time.Now().UnixMicro())
-	demo1.InterfaceDemo()
-	demo1.TestFunc()
-	demo1.Test()
-	demo1.Example()
-	//db.QueryData(1)
-	db.Query()
-	db.Insert()
-	db.Update()
-	db.Delete()
+	go demo1.InterfaceDemo()
+	go demo1.ReadKey()
+
+	go func() {
+		demo1.TestFunc()
+		demo1.Test()
+		demo1.Example()
+		db.QueryData(1)
+	}()
+	go db.Query()
+	go db.Insert()
+	go db.Update()
+	go db.Delete()
 	demo1.ReadFile()
 	demo1.GoroutineTest()
 	demo1.HSetValue("object", "1")
