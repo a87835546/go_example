@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-
+	XenditPay()
 }
 func XenditPay() {
 	go func() {

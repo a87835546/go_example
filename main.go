@@ -61,7 +61,7 @@ func hello(name string) string {
 
 func main() {
 	_app := iris.New()
-
+	app.XenditPay()
 	err := rpc.RegisterName("hello", new(World)) //注册rpc服务   需要绑定结构体
 	if err != nil {
 		fmt.Println("fail in reg rpc")
@@ -91,7 +91,6 @@ func main() {
 	//		rpc.ServeConn(conn) //将连接绑定到rpc服务
 	//	}
 	//}()
-
 	go demo1.InterfaceDemo()
 	go demo1.ReadKey()
 

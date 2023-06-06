@@ -52,9 +52,9 @@ func RegisterUser(ctx iris.Context) {
 	register := RegisterVo{}
 	if err := ctx.ReadJSON(&register); nil != err {
 		ctx.JSON(consts.Result{
-			"parameter error-->>" + err.Error(),
-			500,
-			ctx.RemoteAddr(),
+			Message: "parameter error-->>" + err.Error(),
+			Code:    500,
+			Data:    ctx.RemoteAddr(),
 		})
 	} else {
 		fmt.Printf("register post data ---->>>>%s\n", register)
